@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pilot</string>
+    <string name="btn_start">开始游戏</string>
+    <string name="btn_continue">继续游戏</string>
+    <string name="btn_rank">排行榜</string>
+    <string name="btn_end">结束游戏</string>
+</resources>
