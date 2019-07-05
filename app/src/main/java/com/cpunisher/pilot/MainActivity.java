@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(View v) {
         Intent intent = new Intent(this, GameActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-        this.finish();
     }
 
     public void continueGame(View v) {

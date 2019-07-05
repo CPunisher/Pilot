@@ -1,6 +1,7 @@
 package com.cpunisher.pilot.entity;
 
 import android.graphics.Canvas;
+import com.cpunisher.pilot.game.GameConstSettings;
 import com.cpunisher.pilot.game.GameControl;
 import com.cpunisher.pilot.R;
 
@@ -17,7 +18,7 @@ public class Player extends Entity {
 
     @Override
     public void draw(Canvas canvas, long ticks) {
-        if (!isGodMode() || ticks % 15 != 0) {
+        if (!isGodMode() || ticks % GameConstSettings.GOD_MODE_FLASH != 0) {
             drawTexture(canvas);
         }
         if (isGodMode()) {

@@ -1,12 +1,11 @@
 package com.cpunisher.pilot.entity;
 
 import android.graphics.Canvas;
+import com.cpunisher.pilot.game.GameConstSettings;
 import com.cpunisher.pilot.game.GameControl;
 import com.cpunisher.pilot.R;
 
 public class Bullet extends Entity {
-
-    private static final int SPEED = 30;
 
     /** -1为上 1为下 **/
     private int direction;
@@ -21,7 +20,7 @@ public class Bullet extends Entity {
 
     @Override
     public void move(long ticks) {
-        this.setPosY(this.posY + SPEED * direction);
+        this.setPosY(this.posY + GameConstSettings.BULLET_SPEED * direction);
     }
 
     @Override
@@ -32,14 +31,14 @@ public class Bullet extends Entity {
     @Override
     public void collisionWith(Entity target) {
         if (this.direction == -1 && target instanceof Enemy) {
-            target.setDead();
-            gameControl.addScore(10);
+            Enemy enemy = (Enemy) target;
+            enemy.decHeart(1);
             this.setDead();
         }
         if (this.direction == 1 && target instanceof Player) {
             Player player = (Player) target;
             if (!player.isGodMode()) {
-                gameControl.decHeart();
+                gameControl.decHeart(1);
                 this.setDead();
             }
         }

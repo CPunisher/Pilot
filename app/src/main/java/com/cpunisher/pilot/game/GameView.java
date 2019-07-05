@@ -105,19 +105,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
             }
 
             if (!gameControl.isOver()) {
-                //绘制计分板
                 paint.setAntiAlias(true);
                 paint.setColor(Color.WHITE);
                 paint.setTextSize(50.0f);
+                //绘制计分板
                 canvas.drawText("分数:" + gameControl.getScore(), 10.0f, 50.0f, paint);
 
+                //绘制等级
+                canvas.drawText("等级:" + gameControl.getLevel(), 10.0f, 120.0f, paint);
+
                 //绘制生命爱心
-                for (int i = 0; i < gameControl.getHeart(); i++) {
-                    canvas.drawBitmap(HEART, 10.0f + (HEART.getWidth() + 10.0f) * i, 75.0f, null);
+                for (int i = 1; i <= gameControl.getHeart(); i++) {
+                    canvas.drawBitmap(HEART, this.getWidth() - (HEART.getWidth() + 10.0f) * i, 50.0f, null);
                 }
 
             } else {
-                drawDeadView(canvas, gameControl.getScore());
+                drawDeadView(canvas, gameControl.getScore(), gameControl.getLevel());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,8 +133,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     public void run() {
         while (isDrawing) {
             long currentTime = System.currentTimeMillis();
-            // 1tick = 20ms
-            if (currentTime - preTime <= 20) {
+
+            if (currentTime - preTime <= GameConstSettings.ONE_TICK) {
                 try {
                     Thread.sleep(currentTime - preTime);
                 } catch (InterruptedException e) {
@@ -148,10 +151,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                 gameControl.processEntities(ticks);
 
                 // 移动背景
-                if (startY < 3) {
+                if (startY < GameConstSettings.BACKGROUND_MOVE_SPEED) {
                     startY = BACKGROUND.getHeight() - this.getHeight();
                 } else {
-                    startY -= 3;
+                    startY -= GameConstSettings.BACKGROUND_MOVE_SPEED;
                 }
             }
 
@@ -159,25 +162,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         }
     }
 
-    private void drawDeadView(Canvas canvas, int score) {
+    private void drawDeadView(Canvas canvas, int score, int level) {
         Paint.Align align = paint.getTextAlign();
         paint.setTextSize(200.0f);
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText("Game Over", this.getWidth() / 2, this.getHeight() / 3, paint);
         paint.setTextSize(100.0f);
-        canvas.drawText("分数:" + score, this.getWidth() / 2, this.getHeight() / 3 + 100.0f, paint);
+        canvas.drawText("分数:" + score, this.getWidth() / 2, this.getHeight() / 3 * 1.3f, paint);
+        canvas.drawText("等级:" + level, this.getWidth() / 2, this.getHeight() / 3 * 1.7f, paint);
         paint.setTextSize(75.0f);
         canvas.drawText("触摸屏幕返回标题界面", this.getWidth() / 2, this.getHeight() / 3 * 2, paint);
 
         paint.setTextAlign(align);
-    }
-
-    private void restart(View v) {
-
-    }
-
-    private void returnToTitle(View v) {
-
     }
 
     private void initView() {

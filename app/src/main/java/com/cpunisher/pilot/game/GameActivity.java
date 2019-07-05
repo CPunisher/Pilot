@@ -34,8 +34,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public boolean onTouchEvent(MotionEvent event) {
         if (gameView.getGameControl().isOver()) {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
-            this.finish();
         }
         return super.onTouchEvent(event);
     }

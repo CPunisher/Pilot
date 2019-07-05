@@ -13,6 +13,7 @@ public class GameControl {
 
     private GameView gameView;
     private int score;
+    private int level;
     private int heart;
     private Player player;
     private List<Enemy> enemies;
@@ -22,7 +23,7 @@ public class GameControl {
 
     public GameControl(GameView gameView) {
         this.gameView = gameView;
-        this.heart = 3;
+        this.heart = GameConstSettings.START_HEART;
     }
 
     public void restart() {
@@ -79,7 +80,7 @@ public class GameControl {
         }
 
         //玩家
-        if (ticks % 20 == 0)
+        if (ticks % GameConstSettings.PLAYER_SHOOT == 0)
             getPlayer().shoot();
         player.move(ticks);
 
@@ -92,19 +93,19 @@ public class GameControl {
                 iteratorEnemies.remove();
                 continue;
             }
-            if (ticks % 40 == 0)
+            if (ticks % GameConstSettings.ENEMY_SHOOT == 0)
                 enemy.shoot();
             enemy.move(ticks);
         }
 
-        if (ticks % 75 == 0)
+        if (ticks % GameConstSettings.GENERATE_ENEMY == 0)
             generateEnemy();
 
         //System.out.println("Enemies:" + enemies.size() + "  Enemy Bullets:" + enemyBullets.size() + "  Player Bullets:" + playerBullets.size());
     }
 
     public void generateEnemy() {
-        enemies.add(new Enemy(GameControl.this));
+        enemies.add(new Enemy(level + 1, GameControl.this));
     }
 
     public int getScore() {
@@ -113,18 +114,23 @@ public class GameControl {
 
     public void addScore(int inc) {
         score += inc;
+        level = score / GameConstSettings.SCORE_EACH_LEVEL;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public int getHeart() {
         return heart;
     }
 
-    public void decHeart() {
-        heart--;
+    public void decHeart(int dec) {
+        heart -= dec;
         if (heart <= 0) {
             over = true;
         }
-        player.setGodMode(100);
+        player.setGodMode(GameConstSettings.GOD_TICKS);
     }
 
     public boolean isOver() {
