@@ -7,13 +7,18 @@ import com.cpunisher.pilot.R;
 
 public class Player extends Entity {
 
+    private int power;
     private int godModeCount;
+    private int heart;
 
     public Player(GameControl gameControl) {
         super(gameControl.getGameView().getWidth() / 12, gameControl.getGameView().getHeight() / 9, gameControl);
         this.bindTexture(R.drawable.player);
         this.setPosX(gameControl.getGameView().getWidth() / 2);
         this.setPosY(gameControl.getGameView().getHeight() * 2 / 3);
+
+        this.power = GameConstSettings.START_POWER;
+        this.heart = GameConstSettings.START_HEART;
     }
 
     @Override
@@ -37,7 +42,29 @@ public class Player extends Entity {
     }
 
     public void shoot() {
-        gameControl.getPlayerBullets().add(new Bullet(getPosX(), getPosY(), -1, gameControl));
+        gameControl.getPlayerBullets().add(new Bullet(getPosX(), getPosY(), -1, power, gameControl));
+    }
+
+    public void setPower(int power) {
+        if (power > GameConstSettings.MAX_POWER)
+            this.power = GameConstSettings.MAX_POWER;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public int getHeart() {
+        return heart;
+    }
+
+    public void decHeart(int dec) {
+        heart -= dec;
+        if (heart <= 0) {
+            gameControl.gameOver();
+        }
+        this.setPower(GameConstSettings.START_POWER);
+        this.setGodMode(GameConstSettings.GOD_TICKS);
     }
 
     public boolean isGodMode() {

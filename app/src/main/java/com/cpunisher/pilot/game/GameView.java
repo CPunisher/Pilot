@@ -1,17 +1,14 @@
 package com.cpunisher.pilot.game;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.*;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import com.cpunisher.pilot.MainActivity;
 import com.cpunisher.pilot.R;
 import com.cpunisher.pilot.entity.Bullet;
 import com.cpunisher.pilot.entity.Enemy;
+import com.cpunisher.pilot.entity.Item;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
@@ -103,6 +100,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                     bullet.draw(canvas, ticks);
                 }
             }
+            for (Item item : gameControl.getItems()) {
+                if (item.isLiving()) {
+                    item.draw(canvas, ticks);
+                }
+            }
 
             if (!gameControl.isOver()) {
                 paint.setAntiAlias(true);
@@ -114,8 +116,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                 //绘制等级
                 canvas.drawText("等级:" + gameControl.getLevel(), 10.0f, 120.0f, paint);
 
+                //绘制子弹威力
+                canvas.drawText("威力:" + gameControl.getPlayer().getPower(), 10.0f, 190.0f, paint);
+
                 //绘制生命爱心
-                for (int i = 1; i <= gameControl.getHeart(); i++) {
+                for (int i = 1; i <= gameControl.getPlayer().getHeart(); i++) {
                     canvas.drawBitmap(HEART, this.getWidth() - (HEART.getWidth() + 10.0f) * i, 50.0f, null);
                 }
 

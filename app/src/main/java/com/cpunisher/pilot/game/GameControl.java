@@ -1,9 +1,7 @@
 package com.cpunisher.pilot.game;
 
 import android.hardware.SensorEvent;
-import com.cpunisher.pilot.entity.Bullet;
-import com.cpunisher.pilot.entity.Enemy;
-import com.cpunisher.pilot.entity.Player;
+import com.cpunisher.pilot.entity.*;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,16 +12,15 @@ public class GameControl {
     private GameView gameView;
     private int score;
     private int level;
-    private int heart;
     private Player player;
     private List<Enemy> enemies;
     private List<Bullet> enemyBullets;
     private List<Bullet> playerBullets;
+    private List<Item> items;
     private boolean over;
 
     public GameControl(GameView gameView) {
         this.gameView = gameView;
-        this.heart = GameConstSettings.START_HEART;
     }
 
     public void restart() {
@@ -31,6 +28,7 @@ public class GameControl {
         enemies = new LinkedList<>();
         enemyBullets = new LinkedList<>();
         playerBullets = new LinkedList<>();
+        items = new LinkedList<>();
     }
 
     public void pause() {
@@ -84,6 +82,20 @@ public class GameControl {
             getPlayer().shoot();
         player.move(ticks);
 
+        Iterator<Item> iteratorItems = getItems().iterator();
+        Entity item;
+        while (iteratorItems.hasNext()) {
+            item = iteratorItems.next();
+            if (!item.isLiving()) {
+                iteratorItems.remove();
+                continue;
+            }
+            if (item.isCollisionWith(player)) {
+                item.collisionWith(player);
+            }
+            item.move(ticks);
+        }
+
         //敌人相关
         Iterator<Enemy> iteratorEnemies = getEnemies().iterator();
         Enemy enemy;
@@ -101,11 +113,18 @@ public class GameControl {
         if (ticks % GameConstSettings.GENERATE_ENEMY == 0)
             generateEnemy();
 
+        if (ticks % GameConstSettings.GENERATE_ITEM == 0)
+            generateItem();
+
         //System.out.println("Enemies:" + enemies.size() + "  Enemy Bullets:" + enemyBullets.size() + "  Player Bullets:" + playerBullets.size());
     }
 
     public void generateEnemy() {
-        enemies.add(new Enemy(level + 1, GameControl.this));
+        enemies.add(new Enemy(level + 1, this));
+    }
+
+    public void generateItem() {
+        items.add(new Power(this));
     }
 
     public int getScore() {
@@ -121,16 +140,9 @@ public class GameControl {
         return level;
     }
 
-    public int getHeart() {
-        return heart;
-    }
+    public void gameOver() {
+        over = true;
 
-    public void decHeart(int dec) {
-        heart -= dec;
-        if (heart <= 0) {
-            over = true;
-        }
-        player.setGodMode(GameConstSettings.GOD_TICKS);
     }
 
     public boolean isOver() {
@@ -151,6 +163,10 @@ public class GameControl {
 
     public List<Bullet> getEnemyBullets() {
         return enemyBullets;
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     public GameView getGameView() {

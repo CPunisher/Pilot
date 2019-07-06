@@ -9,13 +9,15 @@ public class Bullet extends Entity {
 
     /** -1为上 1为下 **/
     private int direction;
+    private int power;
 
-    public Bullet(int posX, int posY, int direction, GameControl gameControl) {
+    public Bullet(int posX, int posY, int direction, int power, GameControl gameControl) {
         super(30, 90, gameControl);
         this.bindTexture(R.drawable.bullet);
         this.direction = direction;
         this.posX = posX;
         this.posY = posY;
+        this.power = power;
     }
 
     @Override
@@ -32,13 +34,13 @@ public class Bullet extends Entity {
     public void collisionWith(Entity target) {
         if (this.direction == -1 && target instanceof Enemy) {
             Enemy enemy = (Enemy) target;
-            enemy.decHeart(1);
+            enemy.decHeart(power);
             this.setDead();
         }
         if (this.direction == 1 && target instanceof Player) {
             Player player = (Player) target;
             if (!player.isGodMode()) {
-                gameControl.decHeart(1);
+                player.decHeart(power);
                 this.setDead();
             }
         }

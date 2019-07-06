@@ -1,4 +1,4 @@
-package com.cpunisher.pilot.game;
+package com.cpunisher.pilot.activity;
 
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -8,8 +8,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
-import com.cpunisher.pilot.MainActivity;
 import com.cpunisher.pilot.R;
+import com.cpunisher.pilot.game.GameView;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
 
