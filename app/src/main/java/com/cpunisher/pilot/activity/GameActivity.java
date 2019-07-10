@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import com.cpunisher.pilot.R;
 import com.cpunisher.pilot.game.GameView;
+import com.cpunisher.pilot.util.SysApplication;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -21,6 +22,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SysApplication.getInstance().addActivity(this);
         setContentView(R.layout.activity_game);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

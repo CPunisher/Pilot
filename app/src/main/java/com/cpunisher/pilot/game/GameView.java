@@ -80,6 +80,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         try {
             //绘制背景
             canvas = surfaceHolder.lockCanvas();
+            if (canvas == null) {
+                return;
+            }
+
             bg = Bitmap.createBitmap(BACKGROUND, 0, startY, BACKGROUND.getWidth(), this.getHeight(), matrix, false);
             canvas.drawBitmap(bg, 0, 0, null);
 
@@ -123,14 +127,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                 for (int i = 1; i <= gameControl.getPlayer().getHeart(); i++) {
                     canvas.drawBitmap(HEART, this.getWidth() - (HEART.getWidth() + 10.0f) * i, 50.0f, null);
                 }
-
             } else {
                 drawDeadView(canvas, gameControl.getScore(), gameControl.getLevel());
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            surfaceHolder.unlockCanvasAndPost(canvas);
+            if (surfaceHolder.getSurface().isValid()) {
+                surfaceHolder.unlockCanvasAndPost(canvas);
+            }
         }
     }
 

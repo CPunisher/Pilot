@@ -4,4 +4,6 @@
     <string name="btn_continue">继续游戏</string>
     <string name="btn_rank">排行榜</string>
     <string name="btn_end">结束游戏</string>
+    <string name="btn_back">返回</string>
+    <string name="btn_clear">清除</string>
 </resources>

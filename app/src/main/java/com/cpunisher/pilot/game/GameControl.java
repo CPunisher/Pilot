@@ -1,7 +1,10 @@
 package com.cpunisher.pilot.game;
 
+import android.content.Context;
 import android.hardware.SensorEvent;
 import com.cpunisher.pilot.entity.*;
+import com.cpunisher.pilot.util.AppReferences;
+import com.cpunisher.pilot.util.RankHelper;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -142,7 +145,7 @@ public class GameControl {
 
     public void gameOver() {
         over = true;
-
+        RankHelper.recordScore(gameView.getContext(), score);
     }
 
     public boolean isOver() {
