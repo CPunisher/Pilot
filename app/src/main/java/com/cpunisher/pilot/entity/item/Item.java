@@ -1,9 +1,13 @@
-package com.cpunisher.pilot.entity;
+package com.cpunisher.pilot.entity.item;
 
 import android.graphics.Canvas;
+import com.cpunisher.pilot.entity.Entity;
+import com.cpunisher.pilot.entity.Player;
 import com.cpunisher.pilot.game.GameConstSettings;
 import com.cpunisher.pilot.game.GameControl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Item extends Entity {
@@ -44,5 +48,27 @@ public abstract class Item extends Entity {
             this.posY = posY;
         else
             this.setDead();
+    }
+
+    private static List<Class<? extends Item>> itemList = new ArrayList();
+
+    public static void registerItems() {
+        registerItem(Power.class);
+        registerItem(Heart.class);
+    }
+
+    public static Item generateRandomItem(GameControl gameControl) {
+        Random random = new Random();
+        Item item = null;
+        try {
+            item = itemList.get(random.nextInt(itemList.size())).getConstructor(gameControl.getClass()).newInstance(gameControl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    private static void registerItem(Class<? extends Item> itemClass) {
+        itemList.add(itemClass);
     }
 }

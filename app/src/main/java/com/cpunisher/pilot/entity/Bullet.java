@@ -13,7 +13,7 @@ public class Bullet extends Entity {
 
     public Bullet(int posX, int posY, int direction, int power, GameControl gameControl) {
         super(30, 90, gameControl);
-        this.bindTexture(R.drawable.bullet);
+        this.bindTexture(direction == -1 ? R.drawable.bullet_player : R.drawable.bullet_enemy);
         this.direction = direction;
         this.posX = posX;
         this.posY = posY;

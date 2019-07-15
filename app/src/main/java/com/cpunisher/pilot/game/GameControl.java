@@ -1,9 +1,9 @@
 package com.cpunisher.pilot.game;
 
-import android.content.Context;
 import android.hardware.SensorEvent;
 import com.cpunisher.pilot.entity.*;
-import com.cpunisher.pilot.util.AppReferences;
+import com.cpunisher.pilot.entity.item.Item;
+import com.cpunisher.pilot.entity.item.Power;
 import com.cpunisher.pilot.util.RankHelper;
 
 import java.util.Iterator;
@@ -32,6 +32,7 @@ public class GameControl {
         enemyBullets = new LinkedList<>();
         playerBullets = new LinkedList<>();
         items = new LinkedList<>();
+        Item.registerItems();
     }
 
     public void pause() {
@@ -117,17 +118,13 @@ public class GameControl {
             generateEnemy();
 
         if (ticks % GameConstSettings.GENERATE_ITEM == 0)
-            generateItem();
+            items.add(Item.generateRandomItem(this));
 
         //System.out.println("Enemies:" + enemies.size() + "  Enemy Bullets:" + enemyBullets.size() + "  Player Bullets:" + playerBullets.size());
     }
 
     public void generateEnemy() {
         enemies.add(new Enemy(level + 1, this));
-    }
-
-    public void generateItem() {
-        items.add(new Power(this));
     }
 
     public int getScore() {

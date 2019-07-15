@@ -46,8 +46,7 @@ public class Player extends Entity {
     }
 
     public void setPower(int power) {
-        if (power > GameConstSettings.MAX_POWER)
-            this.power = GameConstSettings.MAX_POWER;
+        this.power = Math.min(power, GameConstSettings.MAX_POWER);
     }
 
     public int getPower() {
@@ -65,6 +64,10 @@ public class Player extends Entity {
         }
         this.setPower(GameConstSettings.START_POWER);
         this.setGodMode(GameConstSettings.GOD_TICKS);
+    }
+
+    public void incHeart(int inc) {
+        heart = Math.min(heart + inc, GameConstSettings.MAX_HEART);
     }
 
     public boolean isGodMode() {

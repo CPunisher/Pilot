@@ -8,7 +8,7 @@ import android.view.SurfaceView;
 import com.cpunisher.pilot.R;
 import com.cpunisher.pilot.entity.Bullet;
 import com.cpunisher.pilot.entity.Enemy;
-import com.cpunisher.pilot.entity.Item;
+import com.cpunisher.pilot.entity.item.Item;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
