@@ -55,6 +55,7 @@ public abstract class Item extends Entity {
     public static void registerItems() {
         registerItem(Power.class);
         registerItem(Heart.class);
+        registerItem(Battery.class);
     }
 
     public static Item generateRandomItem(GameControl gameControl) {

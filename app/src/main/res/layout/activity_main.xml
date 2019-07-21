@@ -20,16 +20,6 @@
             />
 
     <Button
-            android:id="@+id/btnContinue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_continue"
-            android:textSize="40dp"
-            android:layout_marginTop="30dp"
-            android:onClick="continueGame"
-    />
-
-    <Button
             android:id="@+id/btnRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,6 +27,16 @@
             android:textSize="40dp"
             android:layout_marginTop="30dp"
             android:onClick="rank"
+    />
+
+    <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_settings"
+            android:textSize="40dp"
+            android:layout_marginTop="30dp"
+            android:onClick="settings"
     />
 
     <Button

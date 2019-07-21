@@ -3,7 +3,6 @@ package com.cpunisher.pilot.game;
 import android.hardware.SensorEvent;
 import com.cpunisher.pilot.entity.*;
 import com.cpunisher.pilot.entity.item.Item;
-import com.cpunisher.pilot.entity.item.Power;
 import com.cpunisher.pilot.util.RankHelper;
 
 import java.util.Iterator;

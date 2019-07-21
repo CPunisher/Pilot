@@ -15,7 +15,7 @@
                 android:id="@+id/rankViewLeft"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
         />
 
         <TextView
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right"
-                android:layout_weight="0.7"
+                android:layout_weight="0.8"
         />
     </LinearLayout>
 

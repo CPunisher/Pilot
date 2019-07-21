@@ -8,7 +8,7 @@ import java.util.*;
 
 public class RankHelper {
 
-    private static SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH");
 
     public static void recordScore(Context context, int score) {
         Date date = new Date();
